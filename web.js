@@ -54,6 +54,7 @@ app.use(function(req, res, next){
 });
 
 // load controllers
+require('./lib/db').init();
 require('./lib/boot')(app, { verbose: !module.parent });
 
 // assume "not found" in the error msgs
