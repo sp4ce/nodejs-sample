@@ -1,18 +1,40 @@
 <% include ../include/header_public.html %>
 
-<div>
+<div style="float: left">
 	<h2>Login with an existing account</h2>
-	<form>
-		<input type="text" name="username" />
-		<input type="password" name="password" />
-		<input type="submit" name="login" value="login" />
-	</form>
+	<form ng-controller="LoginController" name="loginForm">
+		<div class="control-group" ng-class="{error: loginForm.username.$invalid}">
+			<label>Name</label>
+			<input type="text" name="username" ng-model="login.username" required>
+			<span ng-show="loginForm.username.$error.required" class="help-inline">Required</span>
+		</div>
 
+		<div class="control-group" ng-class="{error: loginForm.password.$invalid}">
+			<label>Password</label>
+			<input type="password" name="password" ng-model="register.password" required>
+			<span ng-show="loginForm.password.$error.required" class="help-inline">Required</span>
+		</div>
+
+		<button ng-click="save()" ng-disabled="loginForm.$invalid" class="btn btn-primary">login</button>
+	</form>
+</div>
+
+<div style="float: left; margin-left: 25px">
 	<h2>Register a new account</h2>
-	<form>
-		<input type="text" name="username" />
-		<input type="password" name="password" />
-		<input type="submit" name="register" value="register" />
+	<form ng-controller="RegisterController" name="registerForm">
+		<div class="control-group" ng-class="{error: registerForm.username.$invalid}">
+			<label>Name</label>
+			<input type="text" name="username" ng-model="register.username" required>
+			<span ng-show="registerForm.username.$error.required" class="help-inline">Required</span>
+		</div>
+
+		<div class="control-group" ng-class="{error: registerForm.password.$invalid}">
+			<label>Password</label>
+			<input type="password" name="password" ng-model="register.password" required>
+			<span ng-show="registerForm.password.$error.required" class="help-inline">Required</span>
+		</div>
+
+		<button ng-click="save()" ng-disabled="registerForm.$invalid" class="btn btn-primary">register</button>
 	</form>
 </div>
 
