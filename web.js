@@ -1,34 +1,82 @@
 var express = require("express");
 var app = express();
-app.use(express.logger());
 
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database(':memory:');
+// map .renderFile to ".html" files
+app.engine('html', require('ejs').renderFile);
 
-db.serialize(function() {
-	db.run("CREATE TABLE lorem (info TEXT)");
+// make ".html" the default
+app.set('view engine', 'html');
 
-	var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
-	for (var i = 0; i < 10; i++) {
-		stmt.run("Ipsum " + i);
-	}
-	stmt.finalize();
+// set views for error and 404 pages
+app.set('views', __dirname + '/public');
+
+// define a custom res.message() method
+// which stores messages in the session
+app.response.message = function(msg) {
+  // reference `req.session` via the `this.req` reference
+  var sess = this.req.session;
+  // simply add the msg to an array for later
+  sess.messages = sess.messages || [];
+  sess.messages.push(msg);
+  return this;
+};
+
+// log
+if (!module.parent) app.use(express.logger('dev'));
+
+// serve static files
+app.use(express.static(__dirname + '/public'));
+
+// session support
+app.use(express.cookieParser('HFGDGJHA23HDHD'));
+app.use(express.session());
+
+// parse request bodies (req.body)
+app.use(express.bodyParser());
+
+// support _method (PUT in forms etc)
+app.use(express.methodOverride());
+
+// expose the "messages" local variable when views are rendered
+app.use(function(req, res, next){
+  var msgs = req.session.messages || [];
+
+  // expose "messages" local variable
+  res.locals.messages = msgs;
+
+  // expose "hasMessages"
+  res.locals.hasMessages = !! msgs.length;
+
+  next();
+  // empty or "flush" the messages so they
+  // don't build up
+  req.session.messages = [];
 });
 
-app.get('/', function(request, response) {
-	console.log('coucou');
-	db.serialize(function() {
-	  var msg = '';
-		db.each("SELECT rowid AS id, info FROM lorem", function(err, row) {
-      //console.log(row.id + ": " + row.info);
-			msg += row.id + ": " + row.info + '<br />';
-		}, function(err, num) {
-			response.send(msg);
-		});
-	});
+// load controllers
+require('./lib/boot')(app, { verbose: !module.parent });
+
+// assume "not found" in the error msgs
+// is a 404. this is somewhat silly, but
+// valid, you can do whatever you like, set
+// properties, use instanceof etc.
+app.use(function(err, req, res, next){
+  // treat as 404
+  if (~err.message.indexOf('not found')) return next();
+
+  // log it
+  console.error(err.stack);
+
+  // error page
+  res.status(500).render('5xx');
 });
 
-var port = process.env.PORT || 5000;
-app.listen(port, function() {
-  console.log("Listening on " + port);
+// assume 404 since no middleware responded
+app.use(function(req, res, next){
+  res.status(404).render('404', { url: req.originalUrl });
 });
+
+if (!module.parent) {
+  app.listen(5000);
+  console.log('listening on port 5000');
+}
