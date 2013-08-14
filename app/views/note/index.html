@@ -26,6 +26,7 @@
 			<label>Name</label>
 			<input type="text" name="username" ng-model="register.username" required>
 			<span ng-show="registerForm.username.$error.required" class="help-inline">Required</span>
+			<span ng-show="!is_unique()" class="help-inline">Please pick a different user</span>
 		</div>
 
 		<div class="control-group" ng-class="{error: registerForm.password.$invalid}">
