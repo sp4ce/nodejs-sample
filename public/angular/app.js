@@ -5,8 +5,10 @@ angular.module('app', [])
 			link: function(scope, elm, attrs, ctrl) {
 				// view -> model
 				elm.on('blur', function() {
+					ctrl.$setValidity('checking', false);
 					scope.$apply(function() {
 						scope.is_unique(elm.val(), function(unique) {
+							ctrl.$setValidity('checking', true);
 							ctrl.$setValidity('used', unique);
 						});
 					});
