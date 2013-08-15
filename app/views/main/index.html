@@ -5,13 +5,13 @@
 	<form ng-controller="LoginController" name="loginForm">
 		<div class="control-group" ng-class="{error: loginForm.username.$invalid}">
 			<label>Name</label>
-			<input type="text" name="username" ng-model="login.username" required>
+			<input type="text" name="username" ng-model="username" required>
 			<span ng-show="loginForm.username.$error.required" class="help-inline">Required</span>
 		</div>
 
 		<div class="control-group" ng-class="{error: loginForm.password.$invalid}">
 			<label>Password</label>
-			<input type="password" name="password" ng-model="register.password" required>
+			<input type="password" name="password" ng-model="password" required>
 			<span ng-show="loginForm.password.$error.required" class="help-inline">Required</span>
 		</div>
 
@@ -24,14 +24,14 @@
 	<form ng-controller="RegisterController" name="registerForm">
 		<div class="control-group" ng-class="{error: registerForm.username.$invalid}">
 			<label>Name</label>
-			<input type="text" name="username" ng-model="register.username" required>
+			<input type="text" name="username" ng-model="username" required>
 			<span ng-show="registerForm.username.$error.required" class="help-inline">Required</span>
 			<span ng-show="!is_unique()" class="help-inline">Please pick a different user</span>
 		</div>
 
 		<div class="control-group" ng-class="{error: registerForm.password.$invalid}">
 			<label>Password</label>
-			<input type="password" name="password" ng-model="register.password" required>
+			<input type="password" name="password" ng-model="password" required>
 			<span ng-show="registerForm.password.$error.required" class="help-inline">Required</span>
 		</div>
 
