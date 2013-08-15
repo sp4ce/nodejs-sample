@@ -1,8 +1,7 @@
 function RegisterController($scope, $http) {
 
 	var controller = this;
-	$http({ method: 'GET', url: '/users'})
-	.success(function(users) {
+	$http.get('/users').success(function(users) {
 		controller.users = users;
 	});
 
@@ -13,6 +12,15 @@ function RegisterController($scope, $http) {
 		}
 
 		return false;
+	}
+
+	$scope.save = function() {
+		$http.post('/user', {
+			name: $scope.username,
+			password: $scope.password }
+		).success(function(user_id) {
+			console.log(user_id);
+		});
 	}
 }
 
