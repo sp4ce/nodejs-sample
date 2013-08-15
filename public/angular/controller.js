@@ -8,6 +8,7 @@ function RegisterController($scope, $http) {
 
 	$scope.is_unique = function() {
 		if (controller.users) {
+			this.registerForm.$setValidity('username', false);
 			return controller.users.indexOf($scope.username) == -1;
 		}
 
