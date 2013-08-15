@@ -1,17 +1,9 @@
 function RegisterController($scope, $http) {
 
-	var controller = this;
-	$http.get('/users').success(function(users) {
-		controller.users = users;
-	});
-
-	$scope.is_unique = function() {
-		if (controller.users) {
-			this.registerForm.$setValidity('username', false);
-			return controller.users.indexOf($scope.username) == -1;
-		}
-
-		return false;
+	$scope.is_unique = function(value, callback) {
+		$http.get('/users').success(function(users) {
+			callback(users.indexOf(value) == -1);
+		});
 	}
 
 	$scope.save = function() {
