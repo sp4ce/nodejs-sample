@@ -2,27 +2,28 @@ var Sequelize = require("sequelize");
 
 // Database connection.
 var sequelize = module.exports = new Sequelize('db', null, null, {
-  // sqlite! now!
-  dialect: 'sqlite',
+	// sqlite! now!
+	dialect: 'sqlite',
 
-  // the storage engine for sqlite
-  // - default ':memory:'
-  storage: 'db.sqlite'
+	// the storage engine for sqlite
+	// - default ':memory:'
+	storage: 'db.sqlite'
 })
 
 // User model.
 var User = module.exports.User = sequelize.define('user', {
-  name:     Sequelize.STRING,
-  password: Sequelize.STRING
+	name:			Sequelize.STRING,
+	password:	Sequelize.STRING,
+	token:		Sequelize.STRING
 });
 
 // Todo model.
 var Todo = sequelize.define('todo', {
-  title:       Sequelize.STRING,
-  description: Sequelize.TEXT,
-	priority:    Sequelize.INTEGER,
-  deadline:    Sequelize.DATE,
-	status:      Sequelize.INTEGER
+	title:				Sequelize.STRING,
+	description:	Sequelize.TEXT,
+	priority:			Sequelize.INTEGER,
+	deadline:			Sequelize.DATE,
+	status:				Sequelize.INTEGER
 });
 
 // Schema information.
