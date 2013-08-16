@@ -8,6 +8,11 @@ angular.module('app', ['ngRoute'], function($routeProvider){
     templateUrl: 'angular/templates/signup-success.html',
     controller: RegisterController
   });
+
+	$routeProvider.when('/todos', {
+		templateUrl: 'angular/templates/todos.html',
+		controller: TodoController
+	});
 })
 .directive('usernameunique', function() {
 	return {
