@@ -1,22 +1,29 @@
 <% include ../include/header_public.html %>
 
-<div style="float: left">
-	<h2>Login with an existing account</h2>
-	<form ng-controller="LoginController" name="loginForm">
-		<div class="control-group" ng-class="{error: loginForm.username.$invalid}">
-			<label>Name</label>
-			<input type="text" name="username" ng-model="username" required>
-			<span ng-show="loginForm.username.$error.required" class="help-inline">Required</span>
-		</div>
+<div style="float: left" ng-controller="LoginController">
+	<div ng-show="show_login">
+		<h2>Login with an existing account</h2>
+		<form  name="loginForm">
+			<div class="control-group" ng-class="{error: loginForm.username.$invalid}">
+				<label>Name</label>
+				<input type="text" name="username" ng-model="username" required>
+				<span ng-show="loginForm.username.$error.required" class="help-inline">Required</span>
+			</div>
 
-		<div class="control-group" ng-class="{error: loginForm.password.$invalid}">
-			<label>Password</label>
-			<input type="password" name="password" ng-model="password" focus="{{password_focus}}" required>
-			<span ng-show="loginForm.password.$error.required" class="help-inline">Required</span>
-		</div>
+			<div class="control-group" ng-class="{error: loginForm.password.$invalid}">
+				<label>Password</label>
+				<input type="password" name="password" ng-model="password" focus="{{password_focus}}" required>
+				<span ng-show="loginForm.password.$error.required" class="help-inline">Required</span>
+			</div>
 
-		<button ng-click="save()" ng-disabled="loginForm.$invalid" class="btn btn-primary">login</button>
-	</form>
+			<button ng-click="login()" ng-disabled="loginForm.$invalid" class="btn btn-primary">login</button>
+		</form>
+	</div>
+
+	<div ng-show="show_logout">
+		<p>Welcome {{username}}</p>
+		<button ng-click="logout()" class="btn btn-primary">logout</button>
+	</div>
 </div>
 
 <div style="float: left; margin-left: 25px" ng-view></div>

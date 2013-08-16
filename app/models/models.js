@@ -12,7 +12,7 @@ var sequelize = module.exports = new Sequelize('db', null, null, {
 
 // User model.
 var User = module.exports.User = sequelize.define('user', {
-	name:			Sequelize.STRING,
+	username:	Sequelize.STRING,
 	password:	Sequelize.STRING,
 	token:		Sequelize.STRING
 });

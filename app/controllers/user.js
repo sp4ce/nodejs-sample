@@ -21,7 +21,7 @@ exports.list = function(req, res, next) {
  */
 exports.create = function(req, res, next) {
 	// Get arguments.
-	var name = req.body.name;
+	var username = req.body.username;
 	var password = req.body.password;
 
 	// Encrypt password
@@ -31,7 +31,7 @@ exports.create = function(req, res, next) {
 	var User = req.app.get('models').User;
 
 	// Create a new user.
-	var user = User.build({ name: name, password: password });
+	var user = User.build({ username: username, password: password });
 
 	// Save in DB.
 	user.save().error(function(err) {
@@ -59,7 +59,7 @@ exports.auth = function(req, res, next) {
 	User = req.app.get('models').User;
 
 	// Get user from DB.
-	User.find({ where: { name: username } }).success(function(user) {
+	User.find({ where: { username: username } }).success(function(user) {
 		// Test if user exit and password is correct.
 		if (user && user.password && user.password === password) {
 			// Generate a token.

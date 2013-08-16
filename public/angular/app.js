@@ -8,7 +8,8 @@ angular.module('app', ['ngRoute'], function($routeProvider){
     templateUrl: 'angular/templates/signup-success.html',
     controller: RegisterController
   });
-}).directive('usernameunique', function() {
+})
+.directive('usernameunique', function() {
 	return {
 		require: 'ngModel',
 		link: function(scope, elm, attrs, ctrl) {
@@ -24,7 +25,8 @@ angular.module('app', ['ngRoute'], function($routeProvider){
 			});
 		}
 	};
-}).directive('focus', function () {
+})
+.directive('focus', function () {
 	return function (scope, element, attrs) {
 		attrs.$observe('focus', function (newValue) {
 			newValue === 'true' && element[0].focus();
