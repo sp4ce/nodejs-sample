@@ -19,8 +19,9 @@ angular.module('app').controller('RegisterController', ['$scope', '$rootScope', 
 
 angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', function($scope, $http, Auth) {
 
-	$scope.show_login = true;
-	$scope.show_logout = false;
+	$scope.show_login = !Auth.isLoggedIn();
+	$scope.show_logout = Auth.isLoggedIn();
+	$scope.username = Auth.currentUser.username;
 
 	$scope.$on('registerSuccessEvent', function(event, username) {
 		$scope.username = username;
@@ -44,7 +45,7 @@ angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', 
 				console.log('auth: ' + data.token);
 				$scope.show_login = false;
 				$scope.show_logout = true;
-				Auth.currentUser = { user: $scope.username, token: data.token};
+				Auth.logUser({ username: $scope.username, token: data.token});
 				window.location.hash = 'todos';
 			}
 		});
@@ -53,6 +54,8 @@ angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', 
 	$scope.logout = function() {
 		$scope.show_login = true;
 		$scope.show_logout = false;
+		Auth.logUser({});
+		window.location.hash = '/';
 	}
 }]);
 

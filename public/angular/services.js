@@ -1,16 +1,22 @@
+'use strict';
+
 angular.module('app').factory('Auth', function($cookieStore) {
 
-	var currentUser = $cookieStore.get('user');
+	var currentUser = $cookieStore.get('user') || {};
 
-	$cookieStore.remove('user');
+	function logUser(user) {
+		currentUser = user;
+		$cookieStore.put('user', currentUser);
+	};
 
 	return {
 		isLoggedIn: function() {
-			if (currentUser) {
+			if (currentUser.token) {
 				return true;
 			}
 			return false;
 		},
+		logUser: logUser,
 		currentUser: currentUser
 	};
 });

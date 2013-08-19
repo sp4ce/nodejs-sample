@@ -22,7 +22,7 @@ angular.module('app', ['ngRoute', 'ngCookies'], function($routeProvider){
 		$rootScope.error = null;
 		if (!next.access.isFree && !Auth.isLoggedIn()) {
 			$location.path('/');
-			$rootScope.broadcast('userNotLoggedEvent');
+			$rootScope.$broadcast('userNotLoggedEvent');
 		}
 	});
 }]);;
