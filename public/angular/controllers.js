@@ -27,6 +27,11 @@ angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', 
 		$scope.password_focus = true;
 	});
 
+	$scope.$on('userNotLoggedEvent', function(event) {
+		$scope.show_login = true;
+		$scope.show_logout = false;
+	});
+
 	$scope.login = function() {
 		$http.post('/auth', {
 			username: $scope.username,
@@ -39,6 +44,8 @@ angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', 
 				console.log('auth: ' + data.token);
 				$scope.show_login = false;
 				$scope.show_logout = true;
+				Auth.currentUser = { user: $scope.username, token: data.token};
+				window.location.hash = 'todos';
 			}
 		});
 	}

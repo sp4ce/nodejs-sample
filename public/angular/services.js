@@ -7,9 +7,9 @@ angular.module('app').factory('Auth', function($cookieStore) {
 	return {
 		isLoggedIn: function() {
 			if (currentUser) {
-				return false;
+				return true;
 			}
-			return true;
+			return false;
 		},
 		currentUser: currentUser
 	};
