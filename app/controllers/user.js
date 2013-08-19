@@ -12,7 +12,7 @@ exports.list = function(req, res, next) {
 		console.log('ERROR' + err);
 		res.json([]);
 	}).success(function(users) {
-		res.json(users.map(function(user) { return user.name }));
+		res.json(users.map(function(user) { return user.username }));
 	});
 };
 
