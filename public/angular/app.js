@@ -20,7 +20,7 @@ angular.module('app', ['ngRoute', 'ngCookies'], function($routeProvider){
 
 	$rootScope.$on("$routeChangeStart", function (event, next, current) {
 		$rootScope.error = null;
-		if (!next.access.isFree && !Auth.isLoggedIn()) {
+		if (next.access && !next.access.isFree && !Auth.isLoggedIn()) {
 			$location.path('/');
 			$rootScope.$broadcast('userNotLoggedEvent');
 		}
