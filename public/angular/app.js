@@ -1,4 +1,4 @@
-angular.module('app', ['ngRoute'], function($routeProvider){
+angular.module('app', ['ngRoute', 'ngCookies'], function($routeProvider){
 	$routeProvider.when('/', {
     templateUrl: 'angular/templates/signup.html',
     controller: 'RegisterController'

@@ -1,4 +1,4 @@
-function RegisterController($scope, $rootScope, $http) {
+angular.module('app').controller('RegisterController', ['$scope', '$rootScope', '$http', 'Auth', function($scope, $rootScope, $http, Auth) {
 
 	$scope.is_unique = function(value, callback) {
 		$http.get('/users').success(function(users) {
@@ -15,9 +15,9 @@ function RegisterController($scope, $rootScope, $http) {
 			$rootScope.$broadcast('registerSuccessEvent', $scope.username);
 		});
 	}
-}
+}]);
 
-function LoginController($scope, $http) {
+angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', function($scope, $http, Auth) {
 
 	$scope.show_login = true;
 	$scope.show_logout = false;
@@ -47,9 +47,9 @@ function LoginController($scope, $http) {
 		$scope.show_login = true;
 		$scope.show_logout = false;
 	}
-}
+}]);
 
-function TodoController($scope) {
+angular.module('app').controller('TodoController', ['$scope', 'Auth', function($scope, Auth) {
 	$scope.todos = [
 		{text:'learn angular', done:true},
 		{text:'build an angular app', done:false}];
@@ -74,4 +74,4 @@ function TodoController($scope) {
 			if (!todo.done) $scope.todos.push(todo);
 		});
 	};
-}
+}]);
