@@ -20,7 +20,11 @@ angular.module('app', ['ngRoute', 'ngCookies'], function($routeProvider){
 
 	$rootScope.$on("$routeChangeStart", function (event, next, current) {
 		$rootScope.error = null;
-		if (next.access && !next.access.isFree && !Auth.isLoggedIn()) {
+		if (Auth.isLoggedIn()) {
+			// User is logged, display the list of todos.
+			$location.path('/todos');
+		} else if (!next.access || !next.access.isFree) {
+			// The user is not logged and the access is not free, redirect to the register page
 			$location.path('/');
 			$rootScope.$broadcast('userNotLoggedEvent');
 		}
