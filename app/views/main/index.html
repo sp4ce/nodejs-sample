@@ -34,6 +34,10 @@
 						<span ng-show="loginForm.password.$error.required" class="help-inline">Required</span>
 					</div>
 
+					<div ng-show="wrong">
+						wrong password or username
+					</div>
+
 					<button ng-click="login()" ng-disabled="loginForm.$invalid" class="btn btn-primary">login</button>
 				</form>
 			</div>

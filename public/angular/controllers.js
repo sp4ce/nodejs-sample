@@ -19,9 +19,11 @@ angular.module('app').controller('RegisterController', ['$scope', '$rootScope', 
 
 angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', function($scope, $http, Auth) {
 
-	$scope.show_login = !Auth.isLoggedIn();
-	$scope.show_logout = Auth.isLoggedIn();
-	$scope.username = Auth.currentUser.username;
+	Auth.isLoggedIn(function(result) {
+		$scope.show_login = !result;
+		$scope.show_logout = result;
+		$scope.username = Auth.currentUser.username;
+	});
 
 	$scope.$on('registerSuccessEvent', function(event, username) {
 		$scope.username = username;
@@ -38,9 +40,8 @@ angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', 
 			username: $scope.username,
 			password: $scope.password
 		}).success(function(data) {
-			console.log(data);
 			if (data.error) {
-				console.log('auth: ' + data.message);
+				$scope.wrong = true;
 			} else {
 				console.log('auth: ' + data.token);
 				$scope.show_login = false;
@@ -60,6 +61,7 @@ angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', 
 }]);
 
 angular.module('app').controller('TodoController', ['$scope', 'Auth', function($scope, Auth) {
+
 	$scope.todos = [
 		{text:'learn angular', done:true},
 		{text:'build an angular app', done:false}];

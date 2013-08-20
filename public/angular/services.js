@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app').factory('Auth', function($cookieStore) {
+angular.module('app').factory('Auth', function($cookieStore, $http) {
 
 	var currentUser = $cookieStore.get('user') || {};
 
@@ -10,11 +10,23 @@ angular.module('app').factory('Auth', function($cookieStore) {
 	};
 
 	return {
-		isLoggedIn: function() {
-			if (currentUser.token) {
-				return true;
+		isLoggedIn: function(callback) {
+			if (!currentUser.token || !currentUser.username) {
+				return callback(false);
 			}
-			return false;
+
+			$http({
+				method: 'GET',
+				url: '/token',
+				params: {
+					username: currentUser.username,
+					token: currentUser.token
+				}
+			}).success(function(result) {
+				callback(eval(result));
+			}).error(function() {
+				callback(false);
+			});
 		},
 		logUser: logUser,
 		currentUser: currentUser

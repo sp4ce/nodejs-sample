@@ -80,3 +80,25 @@ exports.auth = function(req, res, next) {
 		res.json({ error: true, message: err });
 	});
 }
+
+exports.token = function(req, res, next) {
+	// Get arguments.
+	var username = req.query.username;
+	var token = req.query.token;
+
+	// Get model.
+	User = req.app.get('models').User;
+
+	// Get user from DB.
+	User.find({ where: { username: username, token: token } }).success(function(user) {
+		// Test if user exit.
+		if (user) {
+			res.json(true);
+		} else {
+			res.json(false);
+		}
+	}).error(function(err) {
+		console.log('ERROR: ' + err);
+		res.json(false);
+	});
+}
