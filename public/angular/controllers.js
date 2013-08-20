@@ -1,4 +1,4 @@
-angular.module('app').controller('RegisterController', ['$scope', '$rootScope', '$http', 'Auth', function($scope, $rootScope, $http, Auth) {
+angular.module('app').controller('RegisterController', ['$scope', '$rootScope', '$http', function($scope, $rootScope, $http) {
 
 	$scope.is_unique = function(value, callback) {
 		$http.get('/users').success(function(users) {
