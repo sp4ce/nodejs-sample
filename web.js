@@ -59,6 +59,7 @@ app.use(function(req, res, next){
 // Credentials (in this case, a token), and invoke a callback with a user
 // object.
 var passport = require('passport');
+app.use(passport.initialize());
 var BearerStrategy = require('passport-http-bearer').Strategy;
 passport.use(new BearerStrategy({
 	},
@@ -71,15 +72,16 @@ passport.use(new BearerStrategy({
 			// authenticated `user`. Note that in a production-ready application, one
 			// would want to validate the token for authenticity.
 			app.get('models').User.find({ where: { token: token } }).success(function(user) {
-				return done(null, user);
+				if (!user) {
+					return done(null, false);
+				} else {
+					console.log(user.username);
+					return done(null, {id: user.id, username: user.username, token: user.token}, { scope: 'all' });
+				}
 			}).error(function(err) {
+				console.log('ERROR: ' + err);
 				return done(err);
 			});
-			findByToken(token, function(err, user) {
-				if (err) { return done(err); }
-				if (!user) { return done(null, false); }
-				return done(null, user);
-			})
 		});
 	}
 ));

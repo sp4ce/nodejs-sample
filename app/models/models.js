@@ -18,7 +18,7 @@ var User = module.exports.User = sequelize.define('user', {
 });
 
 // Todo model.
-var Todo = sequelize.define('todo', {
+var Todo = module.exports.Todo = sequelize.define('todo', {
 	title:				Sequelize.STRING,
 	description:	Sequelize.TEXT,
 	priority:			Sequelize.INTEGER,
