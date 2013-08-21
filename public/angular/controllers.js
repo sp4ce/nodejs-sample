@@ -61,7 +61,7 @@ angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', 
 
 angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', function($scope, $http, Auth) {
 
-	// The list of priorities
+	// The addTodo functionality.
 	$scope.addTodo = {
 		priorities: ['Low', 'Medium', 'High'],
 		submit: function() {
@@ -76,6 +76,7 @@ angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', f
 			$http.post('/todo?access_token=' + Auth.getCurrentUser().token, {todo: todo}).success(function(id) {
 				todo.id = id;
 				$scope.todos.push(todo);
+				$scope.sort.sort();
 			});
 
 			$scope.addTodo.title = '';
@@ -83,6 +84,35 @@ angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', f
 			$scope.addTodo.priority = '';
 			$scope.addTodo.deadline = '';
 		}
+	}
+
+	// The sort functionality.
+	$scope.sort = {
+		attribute: 'priority',
+		order: 'ascending',
+		sort: function() {
+			function getPriorityValue(todo) {
+				return $scope.addTodo.priorities.indexOf(todo.priority);
+			}
+			function getDealineValue(todo) {
+				// TODO
+				return 0;
+			}
+			function getValue(todo) {
+				switch ($scope.sort.attribute) {
+					case 'priority':
+						return getPriorityValue(todo);
+					default:
+						return 0;
+				}
+			}
+			$scope.todos.sort(function(todo1, todo2) {
+				var value1 = getValue(todo1);
+				var value2 = getValue(todo2);
+				return $scope.sort.order == 'ascending' ? value1 - value2 : value2 - value1;
+			});
+		},
+		change: function() { $scope.sort.sort(); }
 	}
 
 	// Get the todos from the server.
@@ -95,6 +125,7 @@ angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', f
 			$scope.todos = []
 		} else {
 			$scope.todos = result.todos;
+			$scope.sort.sort();
 		}
 	}).error(function() {
 		$scope.todos = []

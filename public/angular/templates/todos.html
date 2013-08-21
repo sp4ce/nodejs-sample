@@ -2,11 +2,11 @@
 <div ng-controller="TodoController">
 	<span>{{remaining()}} of {{todos.length}} remaining,</span>
 	<span>sort by</span>
-	<select>
+	<select ng-model="sort.attribute" ng-change="sort.change()">
 		<option>priority</option>
 		<option>deadline</option>
 	</select>
-	<select>
+	<select ng-model="sort.order" ng-change="sort.change()">
 		<option>ascending</option>
 		<option>descending</option>
 	</select>
