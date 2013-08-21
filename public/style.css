@@ -1,8 +1,8 @@
 label { width: 80px; }
-input.ng-invalid  { border: 1px solid red; }
+select.ng-invalid, input.ng-invalid  { border: 1px solid red; }
 .done-true { text-decoration: line-through; color: grey; }
 #priority { height: 26px; }
-#priority.unselected { color: gray; }
+#priority.ng-invalid { color: gray; }
 #priority option { color: black; }
 .delete {
 	cursor: pointer;
@@ -19,3 +19,4 @@ input.ng-invalid  { border: 1px solid red; }
 }
 .delete span { color:black; position:relative; top:-5px; right:-3px; }
 .delete:hover span { color:red; }
+*

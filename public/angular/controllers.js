@@ -62,10 +62,26 @@ angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', 
 angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', function($scope, $http, Auth) {
 
 	// The list of priorities
-	$scope.addTodoPriority = {
-		list: ['Low', 'Medium', 'High'],
-		change : function() {
-			$scope.addTodoPriority.cssClass = 'selected';
+	$scope.addTodo = {
+		priorities: ['Low', 'Medium', 'High'],
+		submit: function() {
+			var todo = {
+				title: $scope.addTodo.title,
+				description: $scope.addTodo.description,
+				priority: $scope.addTodo.priority,
+				deadline: $scope.addTodo.deadline,
+				done:false
+			};
+
+			$http.post('/todo?access_token=' + Auth.getCurrentUser().token, {todo: todo}).success(function(id) {
+				todo.id = id;
+				$scope.todos.push(todo);
+			});
+
+			$scope.addTodo.title = '';
+			$scope.addTodo.description = '';
+			$scope.addTodo.priority = '';
+			$scope.addTodo.deadline = '';
 		}
 	}
 
@@ -92,22 +108,6 @@ angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', f
 			url: '/todo/' + todo.id + '?access_token=' + Auth.getCurrentUser().token,
 		});
 	}
-
-	$scope.addTodo = function() {
-		var todo = {
-			title: $scope.addTodoTitle,
-			description: $scope.addTodoDescription,
-			priority: $scope.addTodoPriority.value,
-			deadline: $scope.addTodoDeadline,
-			done:false
-		};
-
-		$http.post('/todo?access_token=' + Auth.getCurrentUser().token, {todo: todo}).success(function(id) {
-			todo.id = id;
-			$scope.todos.push(todo);
-		});
-		$scope.todoText = '';
-	};
 
 	$scope.remaining = function() {
 		var count = 0;

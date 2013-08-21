@@ -1,11 +1,16 @@
 <h2>Todo</h2>
 <div ng-controller="TodoController">
-	<span>{{remaining()}} of {{todos.length}} remaining</span>
-	sort by
+	<span>{{remaining()}} of {{todos.length}} remaining,</span>
+	<span>sort by</span>
 	<select>
 		<option>priority</option>
 		<option>deadline</option>
 	</select>
+	<select>
+		<option>ascending</option>
+		<option>descending</option>
+	</select>
+
 	<ul class="unstyled">
 		<li ng-repeat="todo in todos">
 			<input type="checkbox" ng-model="todo.done" title="done">
@@ -16,14 +21,14 @@
 			<span class="delete" ng-click="deleteTodo(todo)" title="delete"><span>x</span></span>
 		</li>
 	</ul>
-	<form ng-submit="addTodo()">
-		<input type="text" ng-model="addTodoTitle"  size="10" placeholder="title">
-		<input type="text" ng-model="addTodoDescription"  size="20" placeholder="description">
-		<select id="priority" class="{{addTodoPriority.cssClass || 'unselected'}}" ng-model="addTodoPriority.value" 
-			ng-change="addTodoPriority.change()" ng-options="p for p in addTodoPriority.list">
+
+	<form ng-submit="addTodo.submit()" name="addTodoForm">
+		<input type="text" ng-model="addTodo.title"  size="10" placeholder="title" required>
+		<input type="text" ng-model="addTodo.description"  size="20" placeholder="description" required>
+		<select id="priority" ng-model="addTodo.priority" ng-options="p for p in addTodo.priorities" required>
 		  <option value="" disabled selected style="display:none;">priority</option>
 		</select>
-		<input type="text" ng-model="addTodoDeadline"  size="5" placeholder="deadline">
-		<input class="btn-primary" type="submit" value="add">
+		<input type="text" ng-model="addTodo.deadline"  size="5" placeholder="deadline">
+		<input class="btn-primary" type="submit" value="add" ng-disabled="addTodoForm.$invalid">
 	</form>
 </div>
