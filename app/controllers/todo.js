@@ -25,11 +25,26 @@ exports.create = function(req, res, next) {
 		var Todo = req.app.get('models').Todo
 
 		// Save the model.
-		Todo.build(todo).save().success(function() {
+		todo = Todo.build(todo);
+		todo.save().success(function() {
 			// Respond to new id.
 			res.json(todo.id);
 		});
 	});
+}
+
+exports.delete = function(req, res, next) {
+	// Get arguments.
+	var id = req.params.todo_id;
+
+	// Get model.
+	var Todo = req.app.get('models').Todo
+
+	// Save the model.
+	Todo.destroy({id: id});
+
+	// Response.
+	res.send();
 }
 
 function get_user_id(req, res, callback) {

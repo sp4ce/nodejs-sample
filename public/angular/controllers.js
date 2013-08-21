@@ -85,8 +85,12 @@ angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', f
 	});
 
 	$scope.deleteTodo = function(todo) {
+		console.log(todo);
 		$scope.todos.splice($scope.todos.indexOf(todo), 1);
-		//TODO API call.
+		$http({
+			method: 'DELETE',
+			url: '/todo/' + todo.id + '?access_token=' + Auth.getCurrentUser().token,
+		});
 	}
 
 	$scope.addTodo = function() {
