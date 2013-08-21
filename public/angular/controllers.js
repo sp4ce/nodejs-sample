@@ -43,7 +43,6 @@ angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', 
 			if (data.error) {
 				$scope.wrong = true;
 			} else {
-				console.log('auth: ' + data.token);
 				$scope.show_login = false;
 				$scope.show_logout = true;
 				Auth.logUser({ username: $scope.username, token: data.token});
