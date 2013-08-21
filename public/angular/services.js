@@ -23,12 +23,17 @@ angular.module('app').factory('Auth', function($cookieStore, $http) {
 					token: currentUser.token
 				}
 			}).success(function(result) {
-				callback(eval(result));
+				result = eval(result);
+				if (!result) {
+					logUser({});
+				}
+				callback(result);
 			}).error(function() {
+				logUser({});
 				callback(false);
 			});
 		},
 		logUser: logUser,
-		currentUser: currentUser
+		getCurrentUser: function() { return currentUser; }
 	};
 });

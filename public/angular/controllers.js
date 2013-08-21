@@ -22,7 +22,7 @@ angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', 
 	Auth.isLoggedIn(function(result) {
 		$scope.show_login = !result;
 		$scope.show_logout = result;
-		$scope.username = Auth.currentUser.username;
+		$scope.username = Auth.getCurrentUser().username;
 	});
 
 	$scope.$on('registerSuccessEvent', function(event, username) {
