@@ -1,21 +1,42 @@
 exports.need_auth = true;
 
 exports.list = function(req, res, next) {
-	// Get parameters.
-	var user_id = req.query.user_id;
-	if (!user_id) {
-		res.json({error: true, message: 'Require user_id in the query string'});
-		return;
-	}
-
-	// Get model.
-	var Todo = req.app.get('models').Todo
-
-	// Get the list of todos.
-	Todo.all({where : { userId: user_id }}).error(function(err) {
-		console.log('ERROR' + err);
-		res.json({error: true, message: err});
-	}).success(function(todos) {
-		res.json({error: false, todos: todos});
+	// Get user associated with token.
+	get_user_id(req, res, function(user) {
+		// Get the list of todos.
+		var Todo = req.app.get('models').Todo
+		Todo.all({where : { userId: user.id }}).error(function(err) {
+			console.log('ERROR' + err);
+			res.json({error: true, message: err});
+		}).success(function(todos) {
+			res.json({error: false, todos: todos});
+		});
 	});
 };
+
+exports.create = function(req, res, next) {
+	// Get user associated with token.
+	get_user_id(req, res, function(user) {
+		// Get arguments.
+		var todo = req.body.todo;
+		todo.userId = user.id;
+
+		// Get model.
+		var Todo = req.app.get('models').Todo
+
+		// Save the model.
+		Todo.build(todo).save();
+
+		// Respond.
+		res.send();
+	});
+}
+
+function get_user_id(req, res, callback) {
+	var token = req.query.access_token;
+	var User = req.app.get('models').User;
+	User.find({ where: { token: token } }).success(callback).error(function(err) {
+		console.log('ERROR' + err);
+		res.json({error: true, message: err});
+	});
+}

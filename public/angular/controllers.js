@@ -60,14 +60,32 @@ angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', 
 	}
 }]);
 
-angular.module('app').controller('TodoController', ['$scope', 'Auth', function($scope, Auth) {
+angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', function($scope, $http, Auth) {
 
-	$scope.todos = [
-		{text:'learn angular', done:true},
-		{text:'build an angular app', done:false}];
+	$http({
+		method: 'GET',
+		url: '/todos',
+		params: { access_token: Auth.getCurrentUser().token }
+	}).success(function(result) {
+		if (result.error) {
+			$scope.todos = []
+		} else {
+			$scope.todos = result.todos;
+		}
+	}).error(function() {
+		$scope.todos = []
+	});
 
 	$scope.addTodo = function() {
-		$scope.todos.push({text:$scope.todoText, done:false});
+		var todo = {
+			title: $scope.addTodoTitle,
+			description: $scope.addTodoDescription,
+			priority: $scope.addTodoPriority,
+			deadline: $scope.addTodoDeadline,
+			done:false
+		};
+		$scope.todos.push(todo);
+		$http.post('/todo?access_token=' + Auth.getCurrentUser().token, {todo: todo});
 		$scope.todoText = '';
 	};
 
