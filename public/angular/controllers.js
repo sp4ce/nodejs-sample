@@ -84,6 +84,11 @@ angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', f
 		$scope.todos = []
 	});
 
+	$scope.deleteTodo = function(todo) {
+		$scope.todos.splice($scope.todos.indexOf(todo), 1);
+		//TODO API call.
+	}
+
 	$scope.addTodo = function() {
 		var todo = {
 			title: $scope.addTodoTitle,
@@ -92,8 +97,11 @@ angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', f
 			deadline: $scope.addTodoDeadline,
 			done:false
 		};
-		$scope.todos.push(todo);
-		$http.post('/todo?access_token=' + Auth.getCurrentUser().token, {todo: todo});
+
+		$http.post('/todo?access_token=' + Auth.getCurrentUser().token, {todo: todo}).success(function(id) {
+			todo.id = id;
+			$scope.todos.push(todo);
+		});
 		$scope.todoText = '';
 	};
 

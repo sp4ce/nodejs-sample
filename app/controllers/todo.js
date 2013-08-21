@@ -25,10 +25,10 @@ exports.create = function(req, res, next) {
 		var Todo = req.app.get('models').Todo
 
 		// Save the model.
-		Todo.build(todo).save();
-
-		// Respond.
-		res.send();
+		Todo.build(todo).save().success(function() {
+			// Respond to new id.
+			res.json(todo.id);
+		});
 	});
 }
 

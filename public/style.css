@@ -4,3 +4,18 @@ input.ng-invalid  { border: 1px solid red; }
 #priority { height: 26px; }
 #priority.unselected { color: gray; }
 #priority option { color: black; }
+.delete {
+	cursor: pointer;
+	background: lightgrey;
+	display: inline-block;
+	position: relative;
+	top: 1px;
+	width: 13px;
+	height: 13px;
+	margin-left: 5px;
+	webkit-border-radius: 29px;
+	-moz-border-radius: 29px;
+	border-radius: 29px;
+}
+.delete span { color:black; position:relative; top:-5px; right:-3px; }
+.delete:hover span { color:red; }
