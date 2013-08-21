@@ -1,3 +1,6 @@
 label { width: 80px; }
 input.ng-invalid  { border: 1px solid red; }
 .done-true { text-decoration: line-through; color: grey; }
+#priority { height: 26px; }
+#priority.unselected { color: gray; }
+#priority option { color: black; }

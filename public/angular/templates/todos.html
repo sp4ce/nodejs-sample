@@ -14,7 +14,10 @@
 	<form ng-submit="addTodo()">
 		<input type="text" ng-model="addTodoTitle"  size="10" placeholder="title">
 		<input type="text" ng-model="addTodoDescription"  size="20" placeholder="description">
-		<input type="text" ng-model="addTodoPriotiry"  size="5" placeholder="priority">
+		<select id="priority" class="{{addTodoPriority.cssClass || 'unselected'}}" ng-model="addTodoPriority.value" 
+			ng-change="addTodoPriority.change()" ng-options="p for p in addTodoPriority.list">
+		  <option value="" disabled selected style="display:none;">priority</option>
+		</select>
 		<input type="text" ng-model="addTodoDeadline"  size="5" placeholder="deadline">
 		<input class="btn-primary" type="submit" value="add">
 	</form>

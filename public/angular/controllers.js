@@ -62,6 +62,15 @@ angular.module('app').controller('LoginController', ['$scope', '$http', 'Auth', 
 
 angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', function($scope, $http, Auth) {
 
+	// The list of priorities
+	$scope.addTodoPriority = {
+		list: ['Low', 'Medium', 'High'],
+		change : function() {
+			$scope.addTodoPriority.cssClass = 'selected';
+		}
+	}
+
+	// Get the todos from the server.
 	$http({
 		method: 'GET',
 		url: '/todos',
@@ -80,7 +89,7 @@ angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', f
 		var todo = {
 			title: $scope.addTodoTitle,
 			description: $scope.addTodoDescription,
-			priority: $scope.addTodoPriority,
+			priority: $scope.addTodoPriority.value,
 			deadline: $scope.addTodoDeadline,
 			done:false
 		};
