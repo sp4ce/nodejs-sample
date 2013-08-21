@@ -22,7 +22,7 @@ var Todo = module.exports.Todo = sequelize.define('todo', {
 	title:				Sequelize.STRING,
 	description:	Sequelize.TEXT,
 	priority:			Sequelize.INTEGER,
-	deadline:			Sequelize.DATE,
+	deadline:			Sequelize.TEXT,
 	done:					Sequelize.INTEGER
 });
 

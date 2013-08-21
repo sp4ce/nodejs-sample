@@ -91,17 +91,12 @@ angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', f
 		attribute: 'priority',
 		order: 'ascending',
 		sort: function() {
-			function getPriorityValue(todo) {
-				return $scope.addTodo.priorities.indexOf(todo.priority);
-			}
-			function getDealineValue(todo) {
-				// TODO
-				return 0;
-			}
 			function getValue(todo) {
 				switch ($scope.sort.attribute) {
 					case 'priority':
-						return getPriorityValue(todo);
+						return $scope.addTodo.priorities.indexOf(todo.priority);
+					case 'deadline':
+						return todo.deadline.getTime();
 					default:
 						return 0;
 				}
@@ -124,7 +119,7 @@ angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', f
 		if (result.error) {
 			$scope.todos = []
 		} else {
-			$scope.todos = result.todos;
+			$scope.todos = result.todos.map(function(todo) { todo.deadline = new Date(todo.deadline); return todo; });
 			$scope.sort.sort();
 		}
 	}).error(function() {

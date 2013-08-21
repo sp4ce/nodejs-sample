@@ -10,25 +10,27 @@
 		<option>ascending</option>
 		<option>descending</option>
 	</select>
+	<br />
+	<br />
 
 	<ul class="unstyled">
-		<li ng-repeat="todo in todos">
+		<li ng-repeat="todo in todos" style="margin-bottom: 10px;">
 			<input type="checkbox" ng-model="todo.done" title="done">
-			<span class="done-{{todo.done}}">{{todo.title}}: </span>
-			<span class="done-{{todo.done}}">{{todo.description}}</span>
-			<span class="done-{{todo.done}}">{{todo.priority}}</span>
-			<span class="done-{{todo.done}}">{{todo.deadline}}</span>
+			<span class="title done-{{todo.done}}">{{todo.title}}</span>
+			<span class="description done-{{todo.done}}">{{todo.description}}</span>
+			<span class="priority done-{{todo.done}}">{{todo.priority}}</span>
+			<span class="deadline done-{{todo.done}}">{{todo.deadline.toDateString()}}</span>
 			<span class="delete" ng-click="deleteTodo(todo)" title="delete"><span>x</span></span>
 		</li>
 	</ul>
 
-	<form ng-submit="addTodo.submit()" name="addTodoForm">
-		<input type="text" ng-model="addTodo.title"  size="10" placeholder="title" required>
-		<input type="text" ng-model="addTodo.description"  size="20" placeholder="description" required>
+	<form ng-submit="addTodo.submit()" name="addTodoForm" style="margin-left: 55px;">
+		<input type="text" ng-model="addTodo.title"  size="11" placeholder="title" required>
+		<input type="text" ng-model="addTodo.description"  size="36" placeholder="description" required>
 		<select id="priority" ng-model="addTodo.priority" ng-options="p for p in addTodo.priorities" required>
 		  <option value="" disabled selected style="display:none;">priority</option>
 		</select>
-		<input type="text" ng-model="addTodo.deadline"  size="5" placeholder="deadline">
+		<input type="text" ng-model="addTodo.deadline"  size="14" placeholder="deadline" ui-date required>
 		<input class="btn-primary" type="submit" value="add" ng-disabled="addTodoForm.$invalid">
 	</form>
 </div>
