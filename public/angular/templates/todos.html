@@ -15,23 +15,42 @@
 
 	<ul class="unstyled">
 		<li ng-repeat="todo in todos" style="margin-bottom: 10px;">
-			<input type="checkbox" ng-model="todo.done" title="Done">
-			<span class="title done-{{todo.done}}">{{todo.title}}</span>
-			<span class="description done-{{todo.done}}">{{todo.description}}</span>
-			<span class="priority done-{{todo.done}}">{{todo.priority}}</span>
-			<span class="deadline done-{{todo.done}}">{{todo.deadline.toDateString()}}</span>
-			<span class="sprite edit" ng-click="editTodo(todo)" title="Edit"></span>
-			<span class="sprite delete" ng-click="deleteTodo(todo)" title="Delete"></span>
+			<form ng-submit="editTodo(todo)" name="editTodoForm">
+				<input type="checkbox" ng-model="todo.done" ng-show="!todo.edit" title="Done">
+
+				<span class="title done-{{todo.done}}" ng-show="!todo.edit">{{todo.title}}</span>
+				<input class="title" name="title" ng-show="todo.edit" ng-model="todo.title" required />
+
+				<span class="description done-{{todo.done}}" ng-show="!todo.edit">{{todo.description}}</span>
+				<input class="description" name="description" ng-show="todo.edit" ng-model="todo.description" required />
+
+				<span class="priority done-{{todo.done}}" ng-show="!todo.edit">{{todo.priority}}</span>
+				<select class="priority" ng-model="todo.priority" ng-show="todo.edit" ng-options="p for p in addTodo.priorities" required>
+					<option value="" disabled selected style="display:none;">priority</option>
+				</select>
+
+				<span class="deadline done-{{todo.done}}" ng-show="!todo.edit">{{todo.deadline.toDateString()}}</span>
+				<input type="text" ng-model="todo.deadline" class="deadline" ng-show="todo.edit" ui-date required />
+
+				<input class="btn-primary" type="submit" value="edit" ng-disabled="editTodoForm.$invalid" ng-show="todo.edit" />
+				<span ng-show="todo.edit">or <a href="" ng-click="todo.edit = false">cancel</a></span>
+				<span class="sprite edit" ng-click="todo.edit = true" title="Edit" ng-show="!todo.edit"></span>
+				<span class="sprite delete" ng-click="deleteTodo(todo)" title="Delete" ng-show="!todo.edit"></span>
+			</form>
 		</li>
 	</ul>
 
 	<form ng-submit="addTodo.submit()" name="addTodoForm" style="margin-left: 55px;">
-		<input type="text" ng-model="addTodo.title"  size="11" placeholder="title" required>
-		<input type="text" ng-model="addTodo.description"  size="36" placeholder="description" required>
-		<select id="priority" ng-model="addTodo.priority" ng-options="p for p in addTodo.priorities" required>
+		<input type="text" ng-model="addTodo.title" class="title" placeholder="title" required />
+
+		<input type="text" ng-model="addTodo.description" class="description" placeholder="description" required />
+
+		<select class="priority" ng-model="addTodo.priority" ng-options="p for p in addTodo.priorities" required>
 		  <option value="" disabled selected style="display:none;">priority</option>
 		</select>
-		<input type="text" ng-model="addTodo.deadline"  size="14" placeholder="deadline" ui-date required>
-		<input class="btn-primary" type="submit" value="add" ng-disabled="addTodoForm.$invalid">
+
+		<input type="text" ng-model="addTodo.deadline" class="deadline" placeholder="deadline" ui-date required />
+
+		<input class="btn-primary" type="submit" value="add" ng-disabled="addTodoForm.$invalid" />
 	</form>
 </div>

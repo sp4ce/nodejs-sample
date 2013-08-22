@@ -33,6 +33,42 @@ exports.create = function(req, res, next) {
 	});
 }
 
+exports.update = function(req, res, next) {
+	// Get user associated with token.
+	get_user_id(req, res, function(user) {
+		// Get arguments.
+		var todo_id = req.params.todo_id;
+		var new_todo = req.body.todo;
+
+		// Get model.
+		var Todo = req.app.get('models').Todo
+
+		// Get the object in DB and save only new values.
+		Todo.find({ where: { id: todo_id } }).success(function(todo) {
+			// Test that this todo belong to the user.
+			if (todo.userId != user.id) {
+				// Send a 404.
+				res.send(404);
+			} else {
+				// Update only existing attribute.
+				for (var name in todo) { todo[name] = new_todo[name] ? new_todo[name] : todo[name]; }
+
+				// save in DB.
+				todo.save().success(function() {
+					// Send success response.
+					res.json({ error: false });
+				}).error(function(error) {
+					// Send error response.
+					res.json({ error: true, message: err});
+				});
+			}
+		}).error(function(err) {
+			// Send error response.
+			res.json({ error: true, message: err});
+		});
+	});
+}
+
 exports.delete = function(req, res, next) {
 	// Get arguments.
 	var id = req.params.todo_id;

@@ -1,13 +1,16 @@
 label { width: 80px; }
 select.ng-invalid, input.ng-invalid  { border: 1px solid red; }
-#priority { height: 26px; }
-#priority.ng-invalid { color: gray; }
-#priority option { color: black; }
 .done-true { text-decoration: line-through; color: grey; }
+
+form[name="editTodoForm"] input.title { margin-left: 16px; }
 .title { font-weight: bold; display: inline-block; width: 100px; word-wrap: break-word; }
 .description { display: inline-block; width: 250px; word-wrap: break-word; }
-.priority { font-style: italic; display: inline-block; width: 72px; }
+.priority { font-style: italic; display: inline-block; width: 85px; }
+select.priority { height: 26px; }
+select.priority.ng-invalid { color: gray; }
+select.priority option { color: black; }
 .deadline { display: inline-block; width: 120px; }
+
 .sprite { display: inline-block; width: 16px; height: 16px; background: url('images/sprite.png'); cursor: pointer;}
 .delete { background-position: -48px 0; }
 .delete:hover { background-position: -32px 0; }

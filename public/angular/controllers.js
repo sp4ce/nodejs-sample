@@ -126,8 +126,15 @@ angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', f
 		$scope.todos = []
 	});
 
+	// Edit functionality
+	$scope.editTodo = function(todo) {
+		todo.edit = false;
+		$scope.sort.sort();
+		$http.put('/todo/' + todo.id +  '?access_token=' + Auth.getCurrentUser().token, { todo: todo });
+	}
+
+	// Delete callback.
 	$scope.deleteTodo = function(todo) {
-		console.log(todo);
 		$scope.todos.splice($scope.todos.indexOf(todo), 1);
 		$http({
 			method: 'DELETE',
