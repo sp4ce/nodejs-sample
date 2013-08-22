@@ -61,7 +61,7 @@ exports.update = function(req, res, next) {
 				// save in DB.
 				todo.save().success(function() {
 					// Send success response.
-					res.json({ error: false });
+					res.json({ error: false , todo: todo });
 				}).error(function(error) {
 					// Send error response.
 					res.json({ error: true, message: err});
