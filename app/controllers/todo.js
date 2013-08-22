@@ -51,7 +51,12 @@ exports.update = function(req, res, next) {
 				res.send(404);
 			} else {
 				// Update only existing attribute.
-				for (var name in todo) { todo[name] = new_todo[name] ? new_todo[name] : todo[name]; }
+				for (var name in todo) {
+					// Skip sequelize automatic attributes.
+					if (name != 'createdAt' && name != 'updatedAt') {
+						todo[name] = new_todo[name] ? new_todo[name] : todo[name];
+					}
+				}
 
 				// save in DB.
 				todo.save().success(function() {
