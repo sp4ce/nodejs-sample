@@ -142,12 +142,4 @@ angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', f
 		});
 		return count;
 	};
-
-	$scope.archive = function() {
-		var oldTodos = $scope.todos;
-		$scope.todos = [];
-		angular.forEach(oldTodos, function(todo) {
-			if (!todo.done) $scope.todos.push(todo);
-		});
-	};
 }]);
