@@ -8,18 +8,8 @@ select.ng-invalid, input.ng-invalid  { border: 1px solid red; }
 .description { display: inline-block; width: 250px; word-wrap: break-word; }
 .priority { font-style: italic; display: inline-block; width: 72px; }
 .deadline { display: inline-block; width: 120px; }
-.delete {
-	cursor: pointer;
-	background: lightgrey;
-	display: inline-block;
-	position: relative;
-	top: 1px;
-	width: 13px;
-	height: 13px;
-	margin-left: 5px;
-	webkit-border-radius: 29px;
-	-moz-border-radius: 29px;
-	border-radius: 29px;
-}
-.delete span { color:black; position:relative; top:-5px; right:-3px; }
-.delete:hover span { color:red; }
+.sprite { display: inline-block; width: 16px; height: 16px; background: url('images/sprite.png'); cursor: pointer;}
+.delete { background-position: -48px 0; }
+.delete:hover { background-position: -32px 0; }
+.edit { background-position: -16px 0; }
+.edit:hover { background-position: 0 0;}

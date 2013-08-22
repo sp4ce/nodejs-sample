@@ -15,12 +15,13 @@
 
 	<ul class="unstyled">
 		<li ng-repeat="todo in todos" style="margin-bottom: 10px;">
-			<input type="checkbox" ng-model="todo.done" title="done">
+			<input type="checkbox" ng-model="todo.done" title="Done">
 			<span class="title done-{{todo.done}}">{{todo.title}}</span>
 			<span class="description done-{{todo.done}}">{{todo.description}}</span>
 			<span class="priority done-{{todo.done}}">{{todo.priority}}</span>
 			<span class="deadline done-{{todo.done}}">{{todo.deadline.toDateString()}}</span>
-			<span class="delete" ng-click="deleteTodo(todo)" title="delete"><span>x</span></span>
+			<span class="sprite edit" ng-click="editTodo(todo)" title="Edit"></span>
+			<span class="sprite delete" ng-click="deleteTodo(todo)" title="Delete"></span>
 		</li>
 	</ul>
 
