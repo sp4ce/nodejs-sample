@@ -119,7 +119,11 @@ angular.module('app').controller('TodoController', ['$scope', '$http', 'Auth', f
 		if (result.error) {
 			$scope.todos = []
 		} else {
-			$scope.todos = result.todos.map(function(todo) { todo.deadline = new Date(todo.deadline); return todo; });
+			$scope.todos = result.todos.map(function(todo) {
+				todo.deadline = new Date(todo.deadline);
+				todo.done = todo.done ? true : false;
+				return todo;
+			});
 			$scope.sort.sort();
 		}
 	}).error(function() {

@@ -16,7 +16,7 @@
 	<ul class="unstyled">
 		<li ng-repeat="todo in todos" style="margin-bottom: 10px;">
 			<form ng-submit="editTodo(todo)" name="editTodoForm">
-				<input type="checkbox" ng-model="todo.done" ng-show="!todo.edit" title="Done">
+				<input type="checkbox" ng-change="editTodo(todo)" ng-model="todo.done" ng-show="!todo.edit" title="Done">
 
 				<span class="title done-{{todo.done}}" ng-show="!todo.edit">{{todo.title}}</span>
 				<input class="title" name="title" ng-show="todo.edit" ng-model="todo.title" required />
