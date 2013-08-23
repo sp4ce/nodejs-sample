@@ -30,5 +30,5 @@ var Todo = module.exports.Todo = sequelize.define('todo', {
 User.hasMany(Todo);
 
 // Schema creation.
-User.sync({force: true});
-Todo.sync({force: true});
+User.sync(/*{force: true}*/);
+Todo.sync(/*{force: true}*/);
